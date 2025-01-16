@@ -1,0 +1,25 @@
+Properties of ResultSet:-
+
+1)-ResultSet Type
+
+a):-Navigation
+
+method:-
+1):-public boolean previous()
+2):-public boolean last()
+3):-public boolean first()
+4):-public boolean relative(int count)
+5):-public boolean absolute(int rowIndex)(Always cout starting)
+
+
+b):-Senstivity
+
+
+ResultSet.Type_SCOLL_SENSTIVE
+ResultSet.Type_SCOLL_INSENSTIVE
+ResultSet.Type_SCOLL_FORWARD_ONLY
+
+2)-ResultSet Concurrency
+
+ResultSet.CONCUR_RED_ONLY
+ResultSet.CONCUR_UPDATABLE
