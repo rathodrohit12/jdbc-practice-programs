@@ -32,7 +32,7 @@ public class ImageHandlerPath {
             Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             // Save the image path in the database
-            connection = JdbcConnectionProvider.getConn();
+            connection = JdbcConnectionProvider.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setString(1, imageName);
             statement.setString(2, destinationFile.getAbsolutePath());
@@ -57,7 +57,7 @@ public class ImageHandlerPath {
         String imagePath = null;
 
         try {
-            connection = JdbcConnectionProvider.getConn();
+            connection = JdbcConnectionProvider.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, imageId);
 

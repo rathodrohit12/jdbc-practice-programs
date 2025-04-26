@@ -19,7 +19,7 @@ public class ImageHandlerBlob {
     public void storeImageAsBlob(String imageName, String imagePath) {
         String sql = "INSERT INTO Images (name, image_data) VALUES (?, ?)";
         try {
-            connection = JdbcConnectionProvider.getConn();
+            connection = JdbcConnectionProvider.getConnection();
             statement = connection.prepareStatement(sql);
 
             // Reading the image as a file stream
@@ -46,7 +46,7 @@ public class ImageHandlerBlob {
     public void retrieveImageAsBlob(int imageId, String outputPath) {
         String sql = "SELECT name, image_data FROM Images WHERE id = ?";
         try {
-            connection = JdbcConnectionProvider.getConn();
+            connection = JdbcConnectionProvider.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, imageId);
 

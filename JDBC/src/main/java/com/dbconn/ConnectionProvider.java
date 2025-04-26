@@ -18,18 +18,13 @@ final  public class ConnectionProvider {
             if (con == null) {
                 Class.forName(PropertyReader.getDataProperty("driver"));
                 con = DriverManager.getConnection(PropertyReader.getDataProperty("url"), PropertyReader.getDataProperty("user"), PropertyReader.getDataProperty("password"));
-                String pass = PropertyReader.getDataProperty("password");
-                System.out.println(pass);
-                return con;
-            }else{
-                return con;
             }
-                  
-            
+            return con;
+
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return con;
     }
 
 }

@@ -1,44 +1,37 @@
 package com.dbconn;
 
-
 import com.utils.PropertyReader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public final class JdbcConnectionProvider {
+public class JdbcConnectionProvider {
 
-    private static final Logger logger = Logger.getLogger(JdbcConnectionProvider.class.getName());
-    private static Connection con = null;
+    private static Connection connection;
 
-    private JdbcConnectionProvider() {
-        // Private constructor to prevent instantiation
+    // Private constructor to prevent instantiation
+    private JdbcConnectionProvider() {}
+
+    public static Connection getConnection() {
+        if (connection == null) {
+            try {
+                Class.forName(PropertyReader.getDataProperty("driver"));
+                connection = DriverManager.getConnection(PropertyReader.getDataProperty("url"), PropertyReader.getDataProperty("user"), PropertyReader.getDataProperty("password"));
+            }catch (ClassNotFoundException | SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return connection;
     }
 
-    public static synchronized Connection getConn() {
-        if (con != null) {
-            return con;
+    public static void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
-
-        try {
-            // Load database driver class
-            String driver = PropertyReader.getDataProperty("driver");
-            String url = PropertyReader.getDataProperty("url");
-            String user = PropertyReader.getDataProperty("user");
-            String password = PropertyReader.getDataProperty("password");
-
-            // Register the driver and establish the connection
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, user, password);
-
-            return con;
-        } catch (ClassNotFoundException | SQLException e) {
-            // Log exception with proper logging framework
-            logger.log(Level.SEVERE, "Connection initialization failed", e);
-        }
-
-        return null;
     }
 }
